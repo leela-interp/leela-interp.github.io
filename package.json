@@ -29,6 +29,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"ndarray": "^1.0.19",
+		"ndarray-ops": "^1.2.2",
+		"onnxjs": "^0.1.8",
+		"onnxruntime-web": "^1.18.0",
 		"pyodide": "^0.25.1"
 	}
 }
