@@ -282,7 +282,32 @@
 		</div>
 		<!-- <div class="w-full flex justify-center items-center flex-col h-32"></div> -->
 	</Block>
-	<div class="h-96"></div>
-	<div class="h-96"></div>
-	<div class="h-96"></div>
+	<div class="flex w-full justify-center pt-4 mt-8 font-sans bg-gray-100">
+		<div class="mx-8 max-w-3xl w-full">
+			<div class="w-full flex justify-start items-center flex-col">
+				<div class="text-gray-500 mt-4 text-2xl mb-8">
+					<a href="#" target="_blank" rel="noreferrer" class="mr-2">
+						<PaperIcon class="inline-block hover:text-black" />
+					</a>
+					<a
+						href="https://github.com/HumanCompatibleAI/leela-interp"
+						target="_blank"
+						rel="noreferrer"
+						class="mr-2"
+					>
+						<GithubIcon class="inline-block hover:text-black" />
+					</a>
+				</div>
+			</div>
+			<div class="text-sm text-gray-600 mb-24">
+				This website is licensed under a <a
+					class="underline"
+					href="http://creativecommons.org/licenses/by-sa/4.0/"
+					target="_blank"
+					rel="noreferrer">Creative Commons Attribution-ShareAlike 4.0 International License</a
+				>. This means you are free to borrow the source code of this website, we just ask that you
+				link back to this page in the footer.
+			</div>
+		</div>
+	</div>
 </div>
