@@ -18,30 +18,35 @@
 			thumb: '/boards/board_0.png',
 			puzzle: '/puzzles/puzzle_0.png',
 			patching_result: '/patching_results/patching_results_0.png',
+			patching: '/patching/patching_0.mp4',
 			figOneCaption: Board1Caption
 		},
 		{
 			thumb: '/boards/board_1.png',
 			puzzle: '/puzzles/puzzle_1.png',
 			patching_result: '/patching_results/patching_results_1.png',
+			patching: '/patching/patching_1.mp4',
 			figOneCaption: Board2Caption
 		},
 		{
 			thumb: '/boards/board_2.png',
 			puzzle: '/puzzles/puzzle_2.png',
 			patching_result: '/patching_results/patching_results_2.png',
+			patching: '/patching/patching_2.mp4',
 			figOneCaption: Board3Caption
 		},
 		{
 			thumb: '/boards/board_3.png',
 			puzzle: '/puzzles/puzzle_3.png',
 			patching_result: '/patching_results/patching_results_3.png',
+			patching: '/patching/patching_3.mp4',
 			figOneCaption: Board4Caption
 		},
 		{
 			thumb: '/boards/board_4.png',
 			puzzle: '/puzzles/puzzle_4.png',
 			patching_result: '/patching_results/patching_results_4.png',
+			patching: '/patching/patching_4.mp4',
 			figOneCaption: Board5Caption
 		}
 	];
@@ -101,7 +106,7 @@
 				<div>
 					{#each boards as board, i}
 						<button
-							class="inline-block md:w-16 md:h-16 h-12 w-12 mr-2 border-2 border-gray-300 px-0.5 py-0.5 border-solid rounded-md cursor-pointer"
+							class="inline-block md:w-16 md:h-16 h-12 w-12 mr-2 border-2 px-0.5 py-0.5 border-solid rounded-md cursor-pointer"
 							class:border-blue-500={selectedBoard === i}
 							class:hover:border-gray-400={selectedBoard !== i}
 							class:hover:border-blue-500={selectedBoard === i}
@@ -198,6 +203,22 @@
 			pass on the original puzzle board state. Measuring the effect on the final output tells us how
 			important that part of Leela's activations was.
 		</span>
+	</Block>
+	<Block size="max-w-4xl">
+		<div>
+			<!-- <video src={boards[selectedBoard].patching} autoplay loop></video> -->
+			<!-- Load all videos, and only show the selected one. -->
+			{#each boards as board, i}
+				<video
+					src={board.patching}
+					autoplay
+					loop
+					preload="auto"
+					class="w-full h-full"
+					class:hidden={selectedBoard !== i}
+				></video>
+			{/each}
+		</div>
 	</Block>
 	<Block>
 		Surprisingly, the <em>target square</em> of the move <em>two turns in the future</em>
