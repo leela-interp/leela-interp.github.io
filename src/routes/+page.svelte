@@ -1,16 +1,18 @@
 <script>
 	import LinkButton from '$lib/components/LinkButton.svelte';
+	import Block from '$lib/components/Block.svelte';
+	import SquareName from '$lib/components/SquareName.svelte';
 
 	import PaperIcon from 'virtual:icons/mingcute/pdf-line';
 	import GithubIcon from 'virtual:icons/mdi/github';
 	import ArxivIcon from 'virtual:icons/simple-icons/arxiv';
 
 	const boards = [
-		{ thumb: '/boards/board_0.png' },
-		{ thumb: '/boards/board_1.png' },
-		{ thumb: '/boards/board_2.png' },
-		{ thumb: '/boards/board_3.png' },
-		{ thumb: '/boards/board_4.png' }
+		{ thumb: '/boards/board_0.png', puzzle: '/puzzles/puzzle_0.png' },
+		{ thumb: '/boards/board_1.png', puzzle: '/puzzles/puzzle_1.png' },
+		{ thumb: '/boards/board_2.png', puzzle: '/puzzles/puzzle_2.png' },
+		{ thumb: '/boards/board_3.png', puzzle: '/puzzles/puzzle_3.png' },
+		{ thumb: '/boards/board_4.png', puzzle: '/puzzles/puzzle_4.png' }
 	];
 
 	const vasilLinks = [
@@ -119,26 +121,44 @@
 			be a step towards a better understanding of their capabilities.
 		</div>
 	</div>
-	<div class="flex w-full justify-center font-serif">
-		<div class="mx-8 max-w-2xl w-full">
-			<h1 class="mb-4 text-2xl font-bold" id="citation">Citation</h1>
-			<div
-				class="font-mono text-xs mt-4 bg-gray-100 px-4 py-4 border-2 border-solid border-gray-200 rounded-md w-full"
-			>
-				<pre class="whitespace-pre-wrap">
+	<Block>
+		<h1 class="mb-4 text-2xl font-bold" id="setup">Setup</h1>
+		We consider chess puzzles such as the following:
+	</Block>
+	<Block size="max-w-4xl" padding="pb-0">
+		<img
+			src={boards[selectedBoard].puzzle}
+			alt="Puzzle"
+			class="w-full h-full transition-all opacity-100"
+		/>
+	</Block>
+	<Block size="max-w-4xl" class="text-base text-gray-600">
+		In the initial board state, white sacrifices the knight on <SquareName
+			square="g6"
+			first_target={true}
+			board_idx="0"
+		/>. Black has no choice but to capture it (second state) since the white queen prevents the king
+		from going to <SquareName square="g8" board_idx="1" />. Then white can checkmate by moving the
+		rook to <SquareName square="h4" board_idx="2" third_target={true} /> (third state).
+	</Block>
+	<Block>
+		<h1 class="mb-4 text-2xl font-bold" id="citation">Citation</h1>
+		<div
+			class="font-mono text-xs mt-4 bg-gray-100 px-4 py-4 border-2 border-solid border-gray-200 rounded-md w-full"
+		>
+			<pre class="whitespace-pre-wrap">
 {`@inproceedings{jenner2024evidence,
 	title = {Evidence of Learned Look-Ahead in a Chess-Playing Neural Network},
 	author = {Jenner, Erik and Kapur, Shreyas and Georgiev, Vasil and Allen, Cameron and Emmons, Scott and Russell, Stuart},
 	booktitle = {arXiv},
 	year = {2024},
 }`}</pre>
-			</div>
-			<div class="text-base mt-8">
-				We would like to thank some people for discussions, feedback, and technical support.
-			</div>
-			<!-- <div class="w-full flex justify-center items-center flex-col h-32"></div> -->
 		</div>
-	</div>
+		<div class="text-base mt-8">
+			We would like to thank some people for discussions, feedback, and technical support.
+		</div>
+		<!-- <div class="w-full flex justify-center items-center flex-col h-32"></div> -->
+	</Block>
 	<div class="h-96"></div>
 	<div class="h-96"></div>
 	<div class="h-96"></div>
