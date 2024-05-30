@@ -213,6 +213,7 @@
 					src={board.patching}
 					autoplay
 					loop
+					muted
 					preload="auto"
 					class="w-full h-full"
 					class:hidden={selectedBoard !== i}
