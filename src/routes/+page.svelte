@@ -51,11 +51,6 @@
 		}
 	];
 
-	const vasilLinks = [
-		'https://ratings.fide.com/profile/2907666',
-		'https://uk.linkedin.com/in/georgievvasil'
-	];
-
 	let figOneHighlights = {};
 
 	const figOne = (e) => {
@@ -85,7 +80,9 @@
 			<div class="mt-6 text-base">
 				<a href="https://ejenner.com/" class="underline">Erik Jenner</a><sup>1</sup>,
 				<a href="https://shreyaskapur.com/" class="underline">Shreyas Kapur</a><sup>1</sup>,
-				<a href={vasilLink} class="underline">Vasil Georgiev</a><sup>2</sup>,
+				<a href="https://uk.linkedin.com/in/georgievvasil" class="underline">Vasil Georgiev</a><sup
+					>2</sup
+				>,
 				<a href="https://camallen.net/" class="underline">Cameron Allen</a><sup>1</sup>,
 				<a href="https://www.scottemmons.com/" class="underline">Scott Emmons</a><sup>1</sup>,
 				<a href="https://people.eecs.berkeley.edu/~russell/" class="underline">Stuart Russell</a
@@ -164,15 +161,21 @@
 			be a step towards a better understanding of their capabilities.
 		</div>
 	</div> -->
-	<Block padding="pb-8">
-		Do neural networks learn to implement algorithms such as look-ahead or search
+	<Block padding="pb-4">
+		<!-- Do neural networks learn to implement algorithms such as look-ahead or search
 		<q>in the wild</q>? We find evidence suggesting the answer is yes&mdash;at least for
 		<a class="underline" href="https://lczero.org">Leela Chess Zero</a>, arguably the strongest
 		existing chess-playing network. Leela seems to internally represent future moves, and those
-		representations are crucial for its final output in certain board state.
+		representations are crucial for its final output in certain board state. -->
+		Do neural networks learn to implement algorithms such as look-ahead or search
+		<q>in the wild</q>? Or do they only ever learn simple heuristics? We investigate this question
+		for
+		<a class="underline" href="https://lczero.org">Leela Chess Zero</a>, arguably the strongest
+		existing chess-playing network.
 	</Block>
 	<Block>
-		We'll showcase a few results here, see <a href="" class="underline">our paper</a> for much more.
+		We find intriguing evidence of learned look-ahead in a single forward pass. This website
+		showcases some of our results, see <a href="" class="underline">our paper</a> for much more.
 	</Block>
 	<Block>
 		<h1 class="mb-4 text-2xl font-bold" id="setup">Setup</h1>
@@ -185,24 +188,29 @@
 		<svelte:component this={boards[selectedBoard].figOneCaption} figure={figOne} />
 	</Block>
 	<Block>
-		Leela&mdash;the network we use&mdash;takes in a board state and outputs a distribution over
-		moves. With only a single forward pass per board state, it can solve puzzles like the above.
-		(You can play against the network on <a
-			class="underline"
-			href="https://lichess.org/@/LazyBot/all">Lichess</a
-		> to get a sense for how strong it is.) Does it use look-ahead to play this well, i.e., does it represent
-		future moves to decide on the move in the current state?
+		We focus on the <em>policy network</em> of Leela, which takes in a board state and outputs a
+		distribution over moves. With only a single forward pass per board state, it can solve puzzles
+		like the above. (You can play against the network on
+		<a class="underline" href="https://lichess.org/@/LazyBot/all">Lichess</a> to get a sense for how
+		strong it is&mdash;its rating there is over 2600.) Humans and manually written chess engines rely
+		on look-ahead to play chess this well; they consider future moves when making a decision. But is
+		the same thing true for Leela?
 	</Block>
 	<Block>
 		<h1 class="mb-4 text-2xl font-bold" id="patching">
 			Activations associated with future moves are crucial
 		</h1>
-		<span>
-			One of the methods we use is <em>activation patching</em>. We patch a small part of Leela's
-			activations from the forward pass of a <em>corrupted</em> version of a puzzle into the forward
-			pass on the original puzzle board state. Measuring the effect on the final output tells us how
-			important that part of Leela's activations was.
-		</span>
+		<p class="pb-4">
+			One of our early experiments was to do <em>activation patching</em>. We patch a small part of
+			Leela's activations from the forward pass of a <em>corrupted</em> version of a puzzle into the
+			forward pass on the original puzzle board state. Measuring the effect on the final output tells
+			us how important that part of Leela's activations was.
+		</p>
+		<p>
+			Leela is a transformer that treats every square of the chess board like a token in a language
+			model. One type of intervention we can thus do is to patch the activation on a single square
+			in a single layer:
+		</p>
 	</Block>
 	<Block size="max-w-4xl">
 		<div>
@@ -222,11 +230,11 @@
 		</div>
 	</Block>
 	<Block>
-		Surprisingly, the <em>target square</em> of the move <em>two turns in the future</em>
-		(what we call the <q>3rd move target square</q>) often stores very important information. The
-		only similarly important squares are the <q>1st move target square</q>
-		and the <q>corrupted square(s)</q>, whose importance is unsurprising based on the architecture
-		of Leela.
+		Surprisingly, we found that the <em>target square</em> of the move
+		<em>two turns in the future</em>
+		(what we call the <q>3rd move target square</q>) often stores very important information. This
+		does not happen in every puzzle, but it does in a striking fraction, and the average effect is
+		much bigger than that of patching on most other squares:
 	</Block>
 	<Block size="max-w-4xl" padding="pb-0">
 		<img
@@ -235,35 +243,68 @@
 			class="w-full h-full transition-all opacity-100"
 		/>
 	</Block>
-	<!-- <Block size="max-w-4xl" class="text-base text-gray-600">
-		In the initial board state, white sacrifices the knight on <SquareName
-			square="g6"
-			first_target={true}
-			board_idx="0"
-		/>. Black has no choice but to capture it (second state) since the white queen prevents the king
-		from going to <SquareName square="g8" board_idx="1" />. Then white can checkmate by moving the
-		rook to <SquareName square="h4" board_idx="2" third_target={true} /> (third state).
-	</Block> -->
+	<Block size="max-w-4xl" class="text-base text-gray-600">
+		<em><strong>Top row:</strong></em> The impact of activation patching on one square and in one
+		layer at a time in an example puzzle. Darker squares mean that patching on that square had a
+		higher impact on the output. The 3rd move target square (<span style="color: #0984e3"
+			>blue dot</span
+		>) is very important in layer 10 (middle board) in some puzzles.
+		<em><strong>Bottom row:</strong></em> Average effects over 22k puzzles. Around layer 10, the
+		effect of patching on the 3rd move target (<span style="color: #0984e3">blue line</span>) is big
+		compared to most other squares (the gray line is the
+		<em>maximum</em> effect over all other squares than the 1st/3rd move target and corrupted square(s).).
+	</Block>
+	<Block>
+		<p class="pb-4">
+			The <q>corrupted square(s)</q> and the <q>1st move target square</q>
+			are also important (in early and late layers respectively), but we expected as much from Leela's
+			architecture. In contrast, the 3rd move target square stands out in middle layers, and we were
+			much more surprised by its importance.
+		</p>
+		<p>
+			In the paper, we take early steps toward understanding how the information stored on the 3rd
+			move target square is being used. For example, we find a single attention head that often
+			moves information from this future target square <q>backward in time</q>
+			to the 1st move target square.
+		</p>
+	</Block>
 	<Block padding="pb-0">
 		<h1 class="mb-4 text-2xl font-bold" id="probes">Probes can predict future moves</h1>
-		<span>
-			We train simple, bilinear probes on parts of Leela's activations that can predict the move 2
-			turns in the future with 92% accuracy.
-		</span>
+		<p class="pb-4">
+			If Leela uses look-ahead, can we <em>explicitly</em> predict future moves from its activations?
+			We train simple, bilinear probes on parts of Leela's activations to predict the move two turns
+			into the future (on a set of puzzles where Leela finds a single clearly best continuation). Our
+			probe architecture is motivated by our earlier results&mdash;it predicts whether a given square
+			is the target square of the 3rd move, since as we've seen, this seems to be where Leela stores
+			important information.
+		</p>
+		<p>
+			We find that this probe can predict the move 2 turns in the future quite reliably (with 92%
+			accuracy in layer 12):
+		</p>
 	</Block>
 	<Block size="max-w-md" padding="pb-0">
 		<img src="/probing.svg" alt="Probing results" class="w-full h-full" />
 	</Block>
 	<Block padding="pb-0">
 		<h1 class="mb-4 text-2xl font-bold" id="more">More results</h1>
-		<span>
+		<p class="pb-4">
 			Our paper has many more details and results than the ones we present here. For example, we
 			find attention heads that attend to valid piece movements and seem to play an important role
 			for look-ahead. <a href="" class="underline">Go take a look!</a>
-		</span>
+		</p>
+		<p>
+			In the grand scheme of things, we still understand very little about how Leela works.
+			Look-ahead seems to play an important role, but we don't know much about exactly how that
+			look-ahead is implemented. That might be an interesting direction for future research.
+		</p>
 	</Block>
 	<Block size="max-w-md" padding="pb-0">
 		<img src="/piece_movement_patterns.svg" alt="Piece movement patterns" class="w-full h-full" />
+	</Block>
+	<Block size="max-w-md" class="text-base text-gray-600">
+		Attention patterns of random examples of <q>piece movement heads</q> we identified in Leela. One
+		of the roles of these heads seems to be determining the consequences of future moves.
 	</Block>
 	<Block>
 		<h1 class="mb-4 text-2xl font-bold" id="citation">Citation</h1>
