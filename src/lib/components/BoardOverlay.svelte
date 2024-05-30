@@ -5,9 +5,11 @@
 
 	export let squareColors = {};
 
+	export let thickness = 4;
+
 	$: squareStyle = (row, col) => {
 		const rv = squareColors[rowColToSquare(row, col)];
-		return rv ? 'border-2 border-solid' : 'transparent';
+		return rv ? `border-${thickness} border-solid` : 'transparent';
 	};
 
 	$: squareColor = (row, col) => {

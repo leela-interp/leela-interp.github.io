@@ -5,8 +5,9 @@
 
 	export let square = 'a1';
 	export let boardIdx = 0;
-	export let color = '#00b894';
+	export let color = '#000000';
 	export let highlightColor = color;
+	export let mono = true;
 
 	function emitEnter() {
 		const squares = square.split(' ');
@@ -34,5 +35,6 @@
 	on:mouseleave={emitLeave}
 	role="tooltip"
 	style={color ? 'color: ' + color : ''}
-	class="font-bold font-mono cursor-help underline decoration-dotted"><slot></slot></span
+	class="{mono ? 'font-mono font-bold ' : ''}cursor-help underline decoration-dotted"
+	><slot></slot></span
 >
