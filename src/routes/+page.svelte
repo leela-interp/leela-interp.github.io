@@ -6,6 +6,7 @@
 	import PaperIcon from 'virtual:icons/mingcute/pdf-line';
 	import GithubIcon from 'virtual:icons/mdi/github';
 	import ArxivIcon from 'virtual:icons/simple-icons/arxiv';
+	import Board from '../lib/components/Board.svelte';
 
 	const boards = [
 		{ thumb: '/boards/board_0.png', puzzle: '/puzzles/puzzle_0.png' },
@@ -19,6 +20,13 @@
 		'https://ratings.fide.com/profile/2907666',
 		'https://uk.linkedin.com/in/georgievvasil'
 	];
+
+	let figOneHighlights = {};
+
+	const figOne = (e) => {
+		const highlights = e.detail;
+		figOneHighlights = highlights;
+	};
 
 	let vasilLink = null;
 
@@ -55,7 +63,7 @@
 	</div>
 	<!-- <div class="w-full border-b border-gray-300"></div> -->
 	<div
-		class="bg-gray-100 bg-opacity-70 sticky top-0 backdrop-blur-md flex w-full justify-center items-start"
+		class="bg-gray-100 bg-opacity-70 sticky top-0 z-10 backdrop-blur-md flex w-full justify-center items-start"
 	>
 		<div class="mx-8 max-w-2xl w-full select-none">
 			<div class="flex text-sm md:text-base my-6 flex-col">
@@ -126,20 +134,17 @@
 		We consider chess puzzles such as the following:
 	</Block>
 	<Block size="max-w-4xl" padding="pb-0">
-		<img
-			src={boards[selectedBoard].puzzle}
-			alt="Puzzle"
-			class="w-full h-full transition-all opacity-100"
-		/>
+		<Board src={boards[selectedBoard].puzzle} highlights={figOneHighlights} />
 	</Block>
 	<Block size="max-w-4xl" class="text-base text-gray-600">
 		In the initial board state, white sacrifices the knight on <SquareName
+			on:hover={figOne}
 			square="g6"
-			first_target={true}
-			board_idx="0"
-		/>. Black has no choice but to capture it (second state) since the white queen prevents the king
-		from going to <SquareName square="g8" board_idx="1" />. Then white can checkmate by moving the
-		rook to <SquareName square="h4" board_idx="2" third_target={true} /> (third state).
+			highlightColor="#000000"
+			boardIdx="0">g6</SquareName
+		>. Black has no choice but to capture it (second state) since the white queen prevents the king
+		from going to <SquareName square="g8" boardIdx="1">g8</SquareName>. Then white can checkmate by
+		moving the rook to <SquareName square="h4" boardIdx="2">h4</SquareName> (third state).
 	</Block>
 	<Block>
 		<h1 class="mb-4 text-2xl font-bold" id="citation">Citation</h1>

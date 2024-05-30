@@ -1,12 +1,38 @@
 <script>
-	export let square = 'a1';
-	export let board_idx = 0;
-	export let first_target = false;
-	export let third_target = false;
+	import { createEventDispatcher } from 'svelte';
 
-	let color = null;
-	if (first_target) color = '#00b894';
-	if (third_target) color = '#0984e3';
+	const dispatch = createEventDispatcher();
+
+	export let square = 'a1';
+	export let boardIdx = 0;
+	export let color = '#00b894';
+	export let highlightColor = color;
+
+	function emitEnter() {
+		const squares = square.split(' ');
+		// Replicate all squares with the same square: color in an object.
+		const squareColors = squares.reduce((acc, square) => {
+			acc[square] = highlightColor;
+			return acc;
+		}, {});
+
+		const boardIdxParsed = parseInt(boardIdx);
+
+		const obj = {};
+		obj[boardIdxParsed] = squareColors;
+
+		dispatch('hover', obj);
+	}
+
+	function emitLeave() {
+		dispatch('hover', {});
+	}
 </script>
 
-<span style={color ? 'color: ' + color : ''} class="font-bold">{square}</span>
+<span
+	on:mouseenter={emitEnter}
+	on:mouseleave={emitLeave}
+	role="tooltip"
+	style={color ? 'color: ' + color : ''}
+	class="font-bold font-mono cursor-help underline decoration-dotted"><slot></slot></span
+>
