@@ -101,12 +101,12 @@
 		class="bg-gray-100 bg-opacity-70 sticky top-0 z-10 backdrop-blur-md flex w-full justify-center items-start"
 	>
 		<div class="mx-8 max-w-2xl w-full select-none">
-			<div class="flex text-sm md:text-base my-6 flex-col">
-				<div class="text-xs uppercase font-mono text-gray-400 mb-4">Choose A Chessboard State</div>
+			<div class="flex text-sm md:text-base my-4 flex-col">
+				<div class="text-xs uppercase font-mono text-gray-400 mb-2">Choose A Chessboard State</div>
 				<div>
 					{#each boards as board, i}
 						<button
-							class="inline-block md:w-16 md:h-16 h-12 w-12 mr-2 border-2 px-0.5 py-0.5 border-solid rounded-md cursor-pointer"
+							class="inline-block md:w-14 md:h-14 h-12 w-12 mr-2 border-2 px-0.5 py-0.5 border-solid rounded-md cursor-pointer"
 							class:border-blue-500={selectedBoard === i}
 							class:hover:border-gray-400={selectedBoard !== i}
 							class:hover:border-blue-500={selectedBoard === i}
