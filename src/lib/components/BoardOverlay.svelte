@@ -7,7 +7,7 @@
 
 	$: squareStyle = (row, col) => {
 		const rv = squareColors[rowColToSquare(row, col)];
-		return rv ? `border-4 border-solid` : 'transparent';
+		return rv ? `border-2 md:border-4 border-solid` : 'transparent';
 	};
 
 	$: squareColor = (row, col) => {
