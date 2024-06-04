@@ -311,7 +311,8 @@
 		<div class="text-base mt-8">
 			We would like to thank Michael Cohen, Lawrence Chan, Erik Jones, Alex Mallen, Neel Nanda, and
 			everyone else we talked to for feedback at various stages of this project! This work was
-			supported by funding from Open Philanthropy and the Future of Life Institute.
+			supported by funding from Open Philanthropy, the Future of Life Institute, and the AI2050
+			program at Schmidt Futures (Grant G-22-63471).
 		</div>
 	</Block>
 	<div class="flex w-full justify-center pt-4 mt-8 font-sans bg-gray-100">
