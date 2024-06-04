@@ -148,7 +148,7 @@
 		</div>
 	</div>
 	<Block padding="pb-4">
-		Do neural networks learn to implement algorithms such as look-ahead or search
+		Do neural networks learn to implement algorithms involving look-ahead or search
 		<q>in the wild</q>? Or do they only ever learn simple heuristics? We investigate this question
 		for
 		<a class="underline" href="https://lczero.org">Leela Chess Zero</a>, arguably the strongest
