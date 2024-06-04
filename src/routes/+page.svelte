@@ -299,11 +299,13 @@
 			class="font-mono text-xs mt-4 bg-gray-100 px-4 py-4 border-2 border-solid border-gray-200 rounded-md w-full"
 		>
 			<pre class="whitespace-pre-wrap">
-{`@inproceedings{jenner2024evidence,
-	title = {Evidence of Learned Look-Ahead in a Chess-Playing Neural Network},
-	author = {Jenner, Erik and Kapur, Shreyas and Georgiev, Vasil and Allen, Cameron and Emmons, Scott and Russell, Stuart},
-	booktitle = {arXiv},
-	year = {2024},
+{`@misc{jenner2024evidence,
+	title={Evidence of Learned Look-Ahead in a Chess-Playing Neural Network}, 
+	author={Erik Jenner and Shreyas Kapur and Vasil Georgiev and Cameron Allen and Scott Emmons and Stuart Russell},
+	year={2024},
+	eprint={2406.00877},
+	archivePrefix={arXiv},
+	primaryClass={cs.LG}
 }`}</pre>
 		</div>
 		<div class="text-base mt-8">
