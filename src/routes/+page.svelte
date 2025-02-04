@@ -1,7 +1,6 @@
 <script>
 	import LinkButton from '$lib/components/LinkButton.svelte';
 	import Block from '$lib/components/Block.svelte';
-	import SquareName from '$lib/components/SquareName.svelte';
 	import Board1Caption from '$lib/components/captions/Board1.svelte';
 	import Board2Caption from '$lib/components/captions/Board2.svelte';
 	import Board3Caption from '$lib/components/captions/Board3.svelte';
@@ -122,18 +121,22 @@
 	<div class="flex w-full justify-center font-serif items-end">
 		<div class="mx-8 max-w-2xl w-full text-black">
 			<div class="flex text-sm md:text-base mb-8 mt-8">
-				<LinkButton class="mr-2">
-					<div class="flex items-center">
-						<PaperIcon class="inline-block mr-1" />
-						Paper
-					</div>
-				</LinkButton>
-				<LinkButton class="mr-2">
-					<div class="flex items-center">
-						<ArxivIcon class="inline-block mr-1" />
-						arXiv
-					</div>
-				</LinkButton>
+				<a href="https://arxiv.org/pdf/2406.00877.pdf">
+					<LinkButton class="mr-2">
+						<div class="flex items-center">
+							<PaperIcon class="inline-block mr-1" />
+							Paper
+						</div>
+					</LinkButton>
+				</a>
+				<a href="https://arxiv.org/abs/2406.00877">
+					<LinkButton class="mr-2">
+						<div class="flex items-center">
+							<ArxivIcon class="inline-block mr-1" />
+							arXiv
+						</div>
+					</LinkButton>
+				</a>
 				<a href="https://github.com/HumanCompatibleAI/leela-interp">
 					<LinkButton>
 						<div class="flex items-center">
@@ -145,30 +148,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="flex w-full justify-center font-serif items-end">
-		<div class="mx-8 max-w-2xl w-full text-black pb-12 text-base">
-			Do neural networks learn to implement algorithms such as look-ahead or search <q
-				>in the wild</q
-			>? We present evidence of <i>learned look-ahead</i> in the policy network of Leela Chess Zero,
-			the currently strongest neural chess engine. We find that Leela internally represents future
-			optimal moves and that these representations are crucial for its final output in certain board
-			states. Concretely, we exploit the fact that Leela is a transformer that treats every
-			chessboard square like a token in language models, and give three lines of evidence: (1)
-			activations on certain squares of future moves are unusually important causally; (2) we find
-			attention heads that move important information <q>forward and backward in time,</q> e.g., from
-			squares of future moves to squares of earlier ones; and (3) we train a simple probe that can predict
-			the optimal move 2 turns ahead with 92% accuracy (in board states where Leela finds a single best
-			line). These findings are an existence proof of learned look-ahead in neural networks and might
-			be a step towards a better understanding of their capabilities.
-		</div>
-	</div> -->
 	<Block padding="pb-4">
-		<!-- Do neural networks learn to implement algorithms such as look-ahead or search
-		<q>in the wild</q>? We find evidence suggesting the answer is yes&mdash;at least for
-		<a class="underline" href="https://lczero.org">Leela Chess Zero</a>, arguably the strongest
-		existing chess-playing network. Leela seems to internally represent future moves, and those
-		representations are crucial for its final output in certain board state. -->
-		Do neural networks learn to implement algorithms such as look-ahead or search
+		Do neural networks learn to implement algorithms involving look-ahead or search
 		<q>in the wild</q>? Or do they only ever learn simple heuristics? We investigate this question
 		for
 		<a class="underline" href="https://lczero.org">Leela Chess Zero</a>, arguably the strongest
@@ -176,11 +157,14 @@
 	</Block>
 	<Block>
 		We find intriguing evidence of learned look-ahead in a single forward pass. This website
-		showcases some of our results, see <a href="" class="underline">our paper</a> for much more.
+		showcases some of our results, see <a href="https://arxiv.org/abs/2406.00877" class="underline"
+			>our paper</a
+		> for much more.
 	</Block>
 	<Block>
 		<h1 class="mb-4 text-2xl font-bold" id="setup">Setup</h1>
-		We consider chess puzzles such as the following:
+		We consider chess puzzles such as the following (you can look at other examples using the puzzle
+		picker at the top):
 	</Block>
 	<Block size="max-w-4xl" padding="pb-0">
 		<Board src={boards[selectedBoard].puzzle} highlights={figOneHighlights} />
@@ -192,10 +176,10 @@
 		We focus on the <em>policy network</em> of Leela, which takes in a board state and outputs a
 		distribution over moves. With only a single forward pass per board state, it can solve puzzles
 		like the above. (You can play against the network on
-		<a class="underline" href="https://lichess.org/@/LazyBot/all">Lichess</a> to get a sense for how
-		strong it is&mdash;its rating there is over 2600.) Humans and manually written chess engines rely
-		on look-ahead to play chess this well; they consider future moves when making a decision. But is
-		the same thing true for Leela?
+		<a class="underline" href="https://lichess.org/@/LazyBot/all">Lichess</a> to get a sense of how strong
+		it is&mdash;its rating there is over 2600.) Humans and manually written chess engines rely on look-ahead
+		to play chess this well; they consider future moves when making a decision. But is the same thing
+		true for Leela?
 	</Block>
 	<Block>
 		<h1 class="mb-4 text-2xl font-bold" id="patching">
@@ -277,7 +261,7 @@
 			We train simple, bilinear probes on parts of Leela's activations to predict the move two turns
 			into the future (on a set of puzzles where Leela finds a single clearly best continuation). Our
 			probe architecture is motivated by our earlier results&mdash;it predicts whether a given square
-			is the target square of the 3rd move, since as we've seen, this seems to be where Leela stores
+			is the target square of the 3rd move since, as we've seen, this seems to be where Leela stores
 			important information.
 		</p>
 		<p>
@@ -293,7 +277,9 @@
 		<p class="pb-4">
 			Our paper has many more details and results than the ones we present here. For example, we
 			find attention heads that attend to valid piece movements and seem to play an important role
-			for look-ahead. <a href="" class="underline">Go take a look!</a>
+			for look-ahead. <a href="https://arxiv.org/abs/2406.00877" class="underline"
+				>Go take a look!</a
+			>
 		</p>
 		<p>
 			In the grand scheme of things, we still understand very little about how Leela works.
@@ -314,24 +300,28 @@
 			class="font-mono text-xs mt-4 bg-gray-100 px-4 py-4 border-2 border-solid border-gray-200 rounded-md w-full"
 		>
 			<pre class="whitespace-pre-wrap">
-{`@inproceedings{jenner2024evidence,
-	title = {Evidence of Learned Look-Ahead in a Chess-Playing Neural Network},
-	author = {Jenner, Erik and Kapur, Shreyas and Georgiev, Vasil and Allen, Cameron and Emmons, Scott and Russell, Stuart},
-	booktitle = {arXiv},
-	year = {2024},
+{`@misc{jenner2024evidence,
+	title={Evidence of Learned Look-Ahead in a Chess-Playing Neural Network}, 
+	author={Erik Jenner and Shreyas Kapur and Vasil Georgiev and Cameron Allen and Scott Emmons and Stuart Russell},
+	year={2024},
+	eprint={2406.00877},
+	archivePrefix={arXiv},
+	primaryClass={cs.LG}
 }`}</pre>
 		</div>
 		<div class="text-base mt-8">
-			We would like to thank some people for discussions, feedback, and technical support.
+			We would like to thank Michael Cohen, Lawrence Chan, Erik Jones, Alex Mallen, Neel Nanda, and
+			everyone else we talked to for feedback at various stages of this project! This work was
+			supported by funding from Open Philanthropy, the Future of Life Institute, and the AI2050
+			program at Schmidt Futures (Grant G-22-63471).
 		</div>
-		<!-- <div class="w-full flex justify-center items-center flex-col h-32"></div> -->
 	</Block>
 	<div class="flex w-full justify-center pt-4 mt-8 font-sans bg-gray-100">
 		<div class="mx-8 max-w-3xl w-full">
 			<div class="w-full flex justify-start items-center flex-col">
 				<div class="text-gray-500 mt-4 text-2xl mb-8">
-					<a href="#" target="_blank" rel="noreferrer" class="mr-2">
-						<PaperIcon class="inline-block hover:text-black" />
+					<a href="https://arxiv.org/abs/2406.00877" target="_blank" rel="noreferrer" class="mr-2">
+						<ArxivIcon class="inline-block hover:text-black" />
 					</a>
 					<a
 						href="https://github.com/HumanCompatibleAI/leela-interp"
