@@ -91,6 +91,7 @@
 			<div class="mt-6 text-sm text-gray-600">
 				<sup>1</sup>UC Berkeley, <sup>2</sup>Independent
 			</div>
+			<div class="mt-4 text-sm text-gray-600 italic">NeurIPS 2024</div>
 		</div>
 	</div>
 	<!-- <div class="w-full border-b border-gray-300"></div> -->
